@@ -1,0 +1,25 @@
+{
+    "name": "autoproxy_server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "pm2 start ./main.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pengzai-dev/autoproxy_server.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/pengzai-dev/autoproxy_server/issues"
+    },
+    "homepage": "https://github.com/pengzai-dev/autoproxy_server#readme",
+    "devDependencies": {
+        "express": "^4.17.1",
+        "lowdb": "^2.1.0"
+    },
+    "type": "module"
+}
