@@ -20,14 +20,10 @@ app.get('/saveip', async (req, res) => {
 });
 app.get('/getip', async (req, res) => {
     const { key } = req.query;
-    const result = { code: 0, msg: '' };
-    const ip = await DB.getIP(key);
-    if (!ip) {
-        result.code = -1;
-        result.msg = '获取失败';
-    } else {
-        result.data = { ip };
-    }
+    const result = { code: 0, data:'http://1.117.90.174:5600' };
+    await res.send(JSON.stringify(result));
+});
+app.get('/proxy-config', async (req, res) => {
     await res.send(JSON.stringify(result));
 });
 app.listen(port, () => {
