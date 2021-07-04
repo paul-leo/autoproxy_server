@@ -1,7 +1,7 @@
 var PROXYS = {
-    outter: "PROXY DIRECT",//在外网用于翻墙
-    dev: "PROXY DEVICE_IP",//开启charles 用于调试
-    inner: "PROXY DIRECT",//在内网用于访问外网
+    outter: "DIRECT",//在外网用于翻墙
+    dev: "__DEV_PROXY__",//开启charles 用于调试
+    inner: "DIRECT",//在内网用于访问外网
     direct: "DIRECT"
   }
   var urlRegs = {

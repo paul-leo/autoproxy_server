@@ -7,9 +7,9 @@ const port = 5000;
 app.get('/saveip', async (req, res) => {
     const { key, ip } = req.query;
     const result = { code: 0, msg: '' };
-    if (!key || !ip) {
+    if (!key) {
         result.code = -1;
-        res.msg = 'ip或key不能为空';
+        res.msg = 'key不能为空';
     } else {
         const saveRes = await DB.saveIP(key, ip);
         if (!saveRes) {
@@ -35,13 +35,19 @@ app.get('/proxy-config', (req, res) => {
     const result = { code: 0, data: 'http://1.117.90.174:5600' };
     res.send(JSON.stringify(result));
 });
+app.get('/copy', (req, res) => {
+    
+});
 app.get('/pac', async (req, res) => {
     const { key } = req.query;
     var pacContent = await fs.readFile('./pac.js', {
         encoding: 'utf8',
     });
-    const ip = (await DB.getIP(key)) || 'DIRECT';
-    pacContent = pacContent.replace(/DEVICE_IP/gi, ip);
+    const ip = await DB.getIP(key);
+    pacContent = pacContent.replace(
+        /__DEV_PROXY__/gi,
+        ip ? 'PROXY ' + ip : 'DIRECT'
+    );
     res.send(pacContent);
 });
 app.listen(port, () => {
