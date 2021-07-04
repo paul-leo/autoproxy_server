@@ -1,7 +1,8 @@
 import express from 'express';
+import DB from './db.js';
+import fs from 'fs-extra';
 const app = express();
 const port = 5000;
-import DB from './db.js';
 
 app.get('/saveip', async (req, res) => {
     const { key, ip } = req.query;
@@ -31,8 +32,17 @@ app.get('/getip', async (req, res) => {
     await res.send(JSON.stringify(result));
 });
 app.get('/proxy-config', (req, res) => {
-    const result = { code: 0, data:'http://1.117.90.174:5600' };
+    const result = { code: 0, data: 'http://1.117.90.174:5600' };
     res.send(JSON.stringify(result));
+});
+app.get('/pac', async (req, res) => {
+    const { key } = req.query;
+    var pacContent = await fs.readFile('./pac.js', {
+        encoding: 'utf8',
+    });
+    const ip = (await DB.getIP(key)) || 'DIRECT';
+    pacContent = pacContent.replace(/DEVICE_IP/gi, ip);
+    res.send(pacContent);
 });
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
