@@ -9,7 +9,7 @@ app.get('/saveip', async (req, res) => {
     const result = { code: 0, msg: '' };
     if (!key) {
         result.code = -1;
-        res.msg = 'key不能为空';
+        result.msg = 'key不能为空';
     } else {
         const saveRes = await DB.saveIP(key, ip);
         if (!saveRes) {
