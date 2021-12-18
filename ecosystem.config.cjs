@@ -14,7 +14,7 @@ module.exports = {
             host: ['121.43.183.161'],
             ref: 'origin/master',
             repo: 'https://github.com/IdeaNest-org/autoproxy_server.git',
-            path: '/var/www',
+            path: '/var/www/autoproxy_server',
             'post-deploy': 'npm install',
         },
     },
