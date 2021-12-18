@@ -11,10 +11,10 @@ module.exports = {
     deploy: {
         production: {
             user: 'ubuntu',
-            host: ['192.168.0.13', '192.168.0.14', '192.168.0.15'],
+            host: ['121.43.183.161'],
             ref: 'origin/master',
-            repo: 'git@github.com:Username/repository.git',
-            path: '/var/www/my-repository',
+            repo: 'https://github.com/IdeaNest-org/autoproxy_server.git',
+            path: '/var/www/autoproxy_server',
             'post-deploy': 'npm install',
         },
     },
