@@ -10,7 +10,7 @@ module.exports = {
     ignore_watch: ['node_modules'],
     deploy: {
         production: {
-            user: 'ubuntu',
+            user: 'root',
             host: ['121.43.183.161'],
             ref: 'origin/master',
             repo: 'https://github.com/IdeaNest-org/autoproxy_server.git',
