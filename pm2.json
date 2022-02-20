@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "autoproxy",
+            "script": "npm",
+            "args": "run start",
+            "cwd": "./"
+        }
+    ]
+}

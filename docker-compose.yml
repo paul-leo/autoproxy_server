@@ -1,0 +1,11 @@
+version: "2"
+services:
+    node_server:
+        build: ./
+        command: bash -c "pm2 restart pm2.json && pm2 logs"
+        environment:
+            - NODE_ENV=production
+        volumes:
+            - ./:/usr/src/app
+        ports:
+            - 8801:8801
