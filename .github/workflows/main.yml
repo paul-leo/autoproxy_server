@@ -28,7 +28,16 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
       
-      - name: build and deploy
-        uses: focusbe/deploy-action@v1
-        with:
-          deploy-token: ${{secrets.DEPLOY_TOKEN}}
+      - name: Deploy to Server
+              uses: focusbe/deploy-action@v2.5.3
+              with:
+                  deploy-type: "rsync"
+                  project-type: "front-static"
+                  username: "rsyncwww"
+                  password: "liupeng@1992"
+                  ip: "47.94.88.179"
+                  remote-path: "www"
+                  project-name: "autoproxy_server"
+                  args: '-av'
+                  source-path: "./"
+                  exclude: ""
