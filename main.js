@@ -35,9 +35,7 @@ app.get('/proxy-config', (req, res) => {
     const result = { code: 0, data: 'http://1.117.90.174:5600' };
     res.send(JSON.stringify(result));
 });
-app.get('/copy', (req, res) => {
-    
-});
+
 app.get('/pac', async (req, res) => {
     const { key } = req.query;
     var pacContent = await fs.readFile('./pac.js', {
@@ -50,6 +48,7 @@ app.get('/pac', async (req, res) => {
     );
     res.send(pacContent);
 });
+app.use('/auto-update', express.static('auto-update'))
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
 });
