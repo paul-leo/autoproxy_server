@@ -32,7 +32,10 @@ app.get('/getip', async (req, res) => {
     await res.send(JSON.stringify(result));
 });
 app.get('/proxy-config', (req, res) => {
-    const result = { code: 0, data: 'tls://sg-m.olg-food.icu:443,ws://@/fbi-open-the-door,vmess://2ab48700-5c25-384d-9680-bc389466f9dc@?alertID=2' };
+    const result = {
+        code: 0,
+        data: 'tls://sg-m.olg-food.icu:443,ws://@/fbi-open-the-door,vmess://2ab48700-5c25-384d-9680-bc389466f9dc@?alertID=2',
+    };
     res.send(JSON.stringify(result));
 });
 
@@ -48,8 +51,7 @@ app.get('/pac', async (req, res) => {
     );
     res.send(pacContent);
 });
-app.use('/auto-update', express.static('auto-update'))
+app.use('/auto-update', express.static('auto-update'));
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
 });
-
