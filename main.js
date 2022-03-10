@@ -34,7 +34,7 @@ app.get('/getip', async (req, res) => {
 app.get('/proxy-config', (req, res) => {
     const result = {
         code: 0,
-        data: 'tls://hk-m5.olg-food.icu:443,ws://@/fbi-open-the-door,vmess://2ab48700-5c25-384d-9680-bc389466f9dc@?alertID=0',
+        data: 'tls://hk-axx3.olg-food.icu:443,ws://@/fbi-open-the-door,vmess://2ab48700-5c25-384d-9680-bc389466f9dc@?alertID=0',
     };
     res.send(JSON.stringify(result));
 });
