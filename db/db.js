@@ -29,5 +29,27 @@ const DB = {
         const { ips } = db.data;
         return ips[key];
     },
+    async saveLog(msg) {
+        try {
+            await db.read();
+            if (!db.data) {
+                db.data = { logs: [] };
+            }
+            db.data.logs.push(msg);
+            await db.write();
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    async getLogs() {
+        await db.read();
+        if (!db.data) {
+            db.data = { logs: [] };
+        }
+        const { logs } = db.data;
+        return logs;
+    },
 };
 export default DB;

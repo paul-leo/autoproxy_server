@@ -1,8 +1,12 @@
 import express from 'express';
-import DB from './db.js';
+import DB from './db/db.js';
+import Logs from './db/logs.js';
 import fs from 'fs-extra';
+import bodyParser from 'body-parser';
+
 const app = express();
 const port = 8801;
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/saveip', async (req, res) => {
     const { key, ip } = req.query;
@@ -51,6 +55,29 @@ app.get('/pac', async (req, res) => {
     );
     res.send(pacContent);
 });
+
+app.post('/log', async (req, res) => {
+    const { msg, appname } = req.body || {};
+    try {
+        const logList = await Logs.saveLog(appname, msg);
+        res.sendStatus(logList ? 200 : 400);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/log', async (req, res) => {
+    const { appname } = req.query;
+    try {
+        const msg = await Logs.getLogs(appname);
+        res.send(JSON.stringify({ data: msg, code: 200 }));
+    } catch (error) {
+        console.log(error);
+        res.send(JSON.stringify({ msg: error, code: 400 }));
+    }
+});
+
 app.use('/auto-update', express.static('auto-update'));
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
