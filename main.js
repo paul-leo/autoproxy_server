@@ -59,7 +59,11 @@ app.get('/pac', async (req, res) => {
 app.post('/log', async (req, res) => {
     const { msg, appname } = req.body || {};
     try {
-        const logList = await Logs.saveLog(appname, msg);
+        const logList = await Logs.saveLog(appname, {
+            msg,
+            ip: req.ip,
+            time: new Date(),
+        });
         res.sendStatus(logList ? 200 : 400);
     } catch (error) {
         console.log(error);
@@ -77,6 +81,8 @@ app.get('/log', async (req, res) => {
         res.send(JSON.stringify({ msg: error, code: 400 }));
     }
 });
+
+app.use('/', express.static('static'));
 
 app.use('/auto-update', express.static('auto-update'));
 app.listen(port, () => {
