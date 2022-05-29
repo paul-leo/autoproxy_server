@@ -38,7 +38,7 @@ app.get('/getip', async (req, res) => {
 app.get('/proxy-config', (req, res) => {
     const result = {
         code: 0,
-        data: 'tcp://iplc-enter-hk-xe2.olg-food.icu:11451,vmess://43b2a554-c57e-3b06-8ee9-a1abe355fc9c@?alterID=0',
+        data: 'tcp://relay-cs-cu.olg-food.cyou:11652,ws://@/fbi-open-the-door,vmess://33e09e6f-2781-3f67-b88d-2e3f93af039e@?alterID=2',
     };
     res.send(JSON.stringify(result));
 });
