@@ -62,7 +62,7 @@ app.post('/log', async (req, res) => {
         const logList = await Logs.saveLog(appname, {
             msg,
             ip: req.ip,
-            time: new Date(),
+            time: new Date().toLocaleString(),
         });
         res.sendStatus(logList ? 200 : 400);
     } catch (error) {
