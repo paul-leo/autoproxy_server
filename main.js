@@ -3,7 +3,7 @@ import DB from './db/db.js';
 import Logs from './db/logs.js';
 import fs from 'fs-extra';
 import bodyParser from 'body-parser';
-
+process.env.TZ = 'Asia/Shanghai';
 const app = express();
 const port = 8801;
 app.use(bodyParser.urlencoded({ extended: true }));
