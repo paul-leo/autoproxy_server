@@ -7,7 +7,7 @@ var PROXYS = {
 var urlRegs = {
     inner: /(\.pajk-ent)|(paic\.com\.cn)/,
     local: /(192\.168)/,
-    dev: /((.+)jk(.+))|(127\.0\.0\.1)|(localhost)|/,
+    dev: /((.+)jk(.+))|(127\.0\.0\.1)|(localhost)|(rootca.pro)/,
 };
 var isCompanyWifi = dnsResolve('paic.com.cn') || dnsResolve('pajk-ent.com');
 var isCompanyInnerNet = dnsResolve('paic.com.cn');
