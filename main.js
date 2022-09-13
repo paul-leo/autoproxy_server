@@ -38,7 +38,7 @@ app.get('/getip', async (req, res) => {
 app.get('/proxy-config', (req, res) => {
     const result = {
         code: 0,
-        data: 'ss://aes-128-gcm:21dba017-30b2-4654-a2b3-9caf433d2b02@yum-install.centos.gatknqh.cn:11010',
+        data: 'trojan://33e09e6f-2781-3f67-b88d-2e3f93af039e@hk-x.fib-sys.xyz:58862',
     };
     res.send(JSON.stringify(result));
 });
