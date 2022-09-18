@@ -17,9 +17,9 @@ const Logs = {
             if (!db.data.logs[appName]) {
                 db.data.logs[appName] = [];
             }
-            const total = db?.data?.logs?.[appName].length;
+            const total = db.data.logs[appName].length;
             if (total > maxLength) {
-                db?.data?.logs?.[appName].splice(maxLength, total - maxLength);
+                db.data.logs[appName].splice(maxLength, total - maxLength);
             }
             db.data.logs[appName].splice(0, 0, msg);
             await db.write();
@@ -38,7 +38,7 @@ const Logs = {
             db.data = { logs: {} };
         }
 
-        return db?.data?.logs?.[appName] || [];
+        return db.data.logs[appName] || [];
     },
 };
 export default Logs;
