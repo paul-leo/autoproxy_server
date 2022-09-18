@@ -46,7 +46,7 @@ jobs:
               with:
                   host: '47.94.88.179'
                   username: 'root'
-                  password: 'fuckyou@1992'
+                  password: 'zuofei@1992'
                   script: |
                       cd /var/www/github/autoproxy_server
                       npm install
