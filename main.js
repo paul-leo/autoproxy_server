@@ -3,6 +3,11 @@ import DB from './helpers/db/db.js';
 import Logs from './helpers/db/logs.js';
 import fs from 'fs-extra';
 import bodyParser from 'body-parser';
+import {
+    getAllNode,
+    toGliderForward,
+    randomANode,
+} from './modules/airport/index.js';
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 const port = 8801;
@@ -35,10 +40,20 @@ app.get('/getip', async (req, res) => {
     }
     await res.send(JSON.stringify(result));
 });
-app.get('/proxy-config', (req, res) => {
+app.get('/proxy-config', async (req, res) => {
+    const forward = toGliderForward(await randomANode());
     const result = {
         code: 0,
-        data: 'trojan://33e09e6f-2781-3f67-b88d-2e3f93af039e@hk-x.fib-sys.xyz:58862',
+        data: forward,
+    };
+    res.send(JSON.stringify(result));
+});
+
+app.get('/all-proxy', async (req, res) => {
+    const list = await getAllNode();
+    const result = {
+        code: 0,
+        data: list,
     };
     res.send(JSON.stringify(result));
 });
