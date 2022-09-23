@@ -8,6 +8,12 @@ import {
     toGliderForward,
     randomANode,
 } from './modules/airport/index.js';
+import {
+    addBlackDomain,
+    getBlackList,
+    removeDomain,
+} from './modules/blackList/index.js';
+
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 const port = 8801;
@@ -28,6 +34,7 @@ app.get('/saveip', async (req, res) => {
     }
     await res.send(JSON.stringify(result));
 });
+
 app.get('/getip', async (req, res) => {
     const { key } = req.query;
     const result = { code: 0, msg: '' };
@@ -98,6 +105,45 @@ app.get('/log', async (req, res) => {
 });
 
 app.use('/', express.static('static'));
+
+app.get('/addBlackDomain', async (req, res) => {
+    const { domain = '' } = req.query;
+    const result = { code: 0, msg: '保存成功' };
+    if (!domain) {
+        result.code = -1;
+        result.msg = 'domain不能为空';
+    } else {
+        const saveRes = await addBlackDomain(domain);
+        if (!saveRes) {
+            result.code = -2;
+            result.msg = '保存失败';
+        }
+    }
+    await res.send(JSON.stringify(result));
+});
+
+app.get('/removeBlackDomain', async (req, res) => {
+    const { domain = '' } = req.query;
+    const result = { code: 0, msg: '保存成功' };
+    if (!domain) {
+        result.code = -1;
+        result.msg = 'domain不能为空';
+    } else {
+        const saveRes = await removeDomain(domain);
+        if (!saveRes) {
+            result.code = -2;
+            result.msg = '保存失败';
+        }
+    }
+    await res.send(JSON.stringify(result));
+});
+
+app.get('/getBlackDomains', async (req, res) => {
+    const result = { code: 0, msg: '保存成功' };
+    const allDomains = await getBlackList();
+    result.list = allDomains;
+    await res.send(JSON.stringify(result));
+});
 
 app.use('/auto-update', express.static('auto-update'));
 app.listen(port, () => {

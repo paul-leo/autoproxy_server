@@ -7,6 +7,7 @@ function hasCnKeyword(label) {
         return label.indexOf(keyword) > -1;
     });
 }
+
 async function randomANode() {
     const randomIndex = Math.round(Math.random());
     let nodeList = await parseAirport(AIRPORTS[randomIndex]);
@@ -16,4 +17,5 @@ async function randomANode() {
     const nodeIndex = parseInt(Math.random() * nodeList.length);
     return nodeList[nodeIndex];
 }
+
 export default randomANode;
