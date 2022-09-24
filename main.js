@@ -139,7 +139,7 @@ app.get('/removeBlackDomain', async (req, res) => {
 });
 
 app.get('/getBlackDomains', async (req, res) => {
-    const result = { code: 0, msg: '保存成功' };
+    const result = { code: 0 };
     const { tag = "domains" } = req.query;
     const allDomains = await getBlackList(tag);
     result.list = allDomains;
