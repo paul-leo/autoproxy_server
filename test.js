@@ -4,8 +4,8 @@ import {
     getBlackList,
 } from './modules/blackList/index.js';
 
-console.log(await addBlackDomain('a.com'));
-console.log(await addBlackDomain('b.com'));
+console.log(await addBlackDomain('a.com','work'));
+console.log(await addBlackDomain('b.com','home'));
 console.log(await getBlackList());
 console.log(await removeDomain('b.com'));
 console.log(await getBlackList());

@@ -107,13 +107,13 @@ app.get('/log', async (req, res) => {
 app.use('/', express.static('static'));
 
 app.get('/addBlackDomain', async (req, res) => {
-    const { domain = '' } = req.query;
+    const { domain = '', tag = "domains" } = req.query;
     const result = { code: 0, msg: '保存成功' };
     if (!domain) {
         result.code = -1;
         result.msg = 'domain不能为空';
     } else {
-        const saveRes = await addBlackDomain(domain);
+        const saveRes = await addBlackDomain(domain, tag);
         if (!saveRes) {
             result.code = -2;
             result.msg = '保存失败';
@@ -123,13 +123,13 @@ app.get('/addBlackDomain', async (req, res) => {
 });
 
 app.get('/removeBlackDomain', async (req, res) => {
-    const { domain = '' } = req.query;
+    const { domain = '', tag = "domains" } = req.query;
     const result = { code: 0, msg: '保存成功' };
     if (!domain) {
         result.code = -1;
         result.msg = 'domain不能为空';
     } else {
-        const saveRes = await removeDomain(domain);
+        const saveRes = await removeDomain(domain, tag);
         if (!saveRes) {
             result.code = -2;
             result.msg = '保存失败';
