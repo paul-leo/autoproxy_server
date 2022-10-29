@@ -129,7 +129,7 @@ app.get('/removeBlackDomain', async (req, res) => {
         result.code = -1;
         result.msg = 'domain不能为空';
     } else {
-        const saveRes = await removeDomain(domain, tag);
+        const saveRes = await removeDomain(decodeURIComponent(domain), tag);
         if (!saveRes) {
             result.code = -2;
             result.msg = '保存失败';
