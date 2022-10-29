@@ -10,7 +10,7 @@ const defaultTagName = "domains";
 
 // 添加一个域名到数据库
 export async function addBlackDomain(domain, tag = defaultTagName) {
-    if (!domain || domain.length > 20) {
+    if (!domain || domain.length > 40) {
         return false;
     }
     try {
