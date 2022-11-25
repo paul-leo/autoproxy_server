@@ -148,16 +148,16 @@ app.get('/getBlackDomains', async (req, res) => {
 
 //
 app.get('getAllIntranetPort', async (req, res) => {
-    const res = await DB.getAllIntranetPort();
-    await res.send(JSON.stringify(res));
+    const result = await DB.getAllIntranetPort();
+    await res.send(JSON.stringify(result));
 });
 /**
  * 申请一个内网穿透 端口号
  */
 app.post('applyIntranePort', async (req, res) => {
     const { deviceId = '', clientPort = 8444 } = req.query;
-    const res = await DB.saveIntranetPort(deviceId, clientPort);
-    await res.send(JSON.stringify({ res }));
+    const result = await DB.saveIntranetPort(deviceId, clientPort);
+    await res.send(JSON.stringify({ result }));
 });
 
 app.get('login', async () => {});
