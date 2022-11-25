@@ -51,5 +51,52 @@ const DB = {
         const { logs } = db.data;
         return logs;
     },
+    /**
+     * 保存内网穿透端口
+     * @param {*} deviceId
+     * @param {*} port
+     * @returns
+     */
+    async saveIntranetPort(deviceId, port) {
+        try {
+            await db.read();
+            if (!db.data) {
+                db.data = { intranetPorts: {} };
+            }
+            db.data.intranetPorts[deviceId] = port;
+            await db.write();
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    /**
+     * 获取内网穿透地址
+     * @param {*} deviceId
+     * @returns
+     */
+    async getIntranetPort(deviceId) {
+        if (!deviceId) {
+            return;
+        }
+        await db.read();
+        if (!db.data) {
+            db.data = { intranetPorts: {} };
+        }
+        const { intranetPorts } = db.data;
+        return intranetPorts[deviceId];
+    },
+    /**
+     * 获取所有的内网端口号
+     * @returns
+     */
+    async getAllIntranetPort() {
+        await db.read();
+        if (!db.data) {
+            db.data = { intranetPorts: {} };
+        }
+        return intranetPorts;
+    },
 };
 export default DB;

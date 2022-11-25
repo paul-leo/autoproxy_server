@@ -107,7 +107,7 @@ app.get('/log', async (req, res) => {
 app.use('/', express.static('static'));
 
 app.get('/addBlackDomain', async (req, res) => {
-    const { domain = '', tag = "domains" } = req.query;
+    const { domain = '', tag = 'domains' } = req.query;
     const result = { code: 0, msg: '保存成功' };
     if (!domain) {
         result.code = -1;
@@ -123,7 +123,7 @@ app.get('/addBlackDomain', async (req, res) => {
 });
 
 app.get('/removeBlackDomain', async (req, res) => {
-    const { domain = '', tag = "domains" } = req.query;
+    const { domain = '', tag = 'domains' } = req.query;
     const result = { code: 0, msg: '保存成功' };
     if (!domain) {
         result.code = -1;
@@ -140,13 +140,32 @@ app.get('/removeBlackDomain', async (req, res) => {
 
 app.get('/getBlackDomains', async (req, res) => {
     const result = { code: 0 };
-    const { tag = "domains" } = req.query;
+    const { tag = 'domains' } = req.query;
     const allDomains = await getBlackList(tag);
     result.list = allDomains;
     await res.send(JSON.stringify(result));
 });
 
+//
+app.get('getAllIntranetPort', async (req, res) => {
+    const res = await DB.getAllIntranetPort();
+    await res.send(JSON.stringify(res));
+});
+/**
+ * 申请一个内网穿透 端口号
+ */
+app.post('applyIntranePort', async (req, res) => {
+    const { deviceId = '', clientPort = 8444 } = req.query;
+    const res = await DB.saveIntranetPort(deviceId, clientPort);
+    await res.send(JSON.stringify({ res }));
+});
+
+app.get('login', async () => {});
+
 app.use('/auto-update', express.static('auto-update'));
+
+app.use('/front', express.static('front'));
+
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
 });
