@@ -13,12 +13,18 @@ import {
     getBlackList,
     removeDomain,
 } from './modules/blackList/index.js';
-
+import Intranet from './modules/Intranet/index.js';
+import { Server } from 'socket.io';
+import http from 'http';
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server);
+
 const port = 8801;
 app.use(bodyParser.urlencoded({ extended: true }));
-
+new Intranet(io);
 app.get('/saveip', async (req, res) => {
     const { key, ip } = req.query;
     const result = { code: 0, msg: '' };
@@ -166,6 +172,6 @@ app.use('/auto-update', express.static('auto-update'));
 
 app.use('/front', express.static('front'));
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
 });
