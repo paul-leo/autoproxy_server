@@ -45,6 +45,10 @@ export default class Intranet {
                     this.bridges = this.bridges.filter((item) => {
                         return item.id !== bridgeId;
                     });
+                    this.clients = this.clients.filter((item) => {
+                        return item.bridge.id !== bridgeId;
+                    });
+                    this.sendToServer();
                 });
             });
 

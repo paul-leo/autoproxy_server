@@ -17,10 +17,10 @@ socket.on('connect', () => {
     //         client: '111111',
     //     });
     // }, 1000);
-    // socket.emit('server-online', {
-    //     action: 'disconnected',
-    //     client: '111111',
-    // });
+    socket.emit('server-online', {
+        action: 'disconnected',
+        client: '111111',
+    });
     socket.on('client-change', (clients) => {
         console.log('clients', clients);
     });
