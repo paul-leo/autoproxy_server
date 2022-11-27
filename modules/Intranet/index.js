@@ -32,7 +32,7 @@ export default class Intranet {
                                 });
                             }
                             break;
-                        case 'disconnected':
+                        case 'released':
                             this.clients = this.clients.filter((item) => {
                                 item.client !== client;
                             });
