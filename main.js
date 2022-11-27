@@ -16,6 +16,7 @@ import {
 import Intranet from './modules/Intranet/index.js';
 import { Server } from 'socket.io';
 import http from 'http';
+import httpProxy from 'http-proxy';
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 
@@ -25,6 +26,7 @@ const io = new Server(server);
 const port = 8801;
 app.use(bodyParser.urlencoded({ extended: true }));
 new Intranet(io);
+
 app.get('/saveip', async (req, res) => {
     const { key, ip } = req.query;
     const result = { code: 0, msg: '' };
@@ -174,4 +176,10 @@ app.use('/front', express.static('front'));
 
 server.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
+    httpProxy
+        .createServer({
+            target: 'ws://localhost:8801',
+            ws: true,
+        })
+        .listen(8802);
 });
