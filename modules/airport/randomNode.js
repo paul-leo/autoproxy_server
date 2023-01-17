@@ -1,7 +1,7 @@
 import parseAirport from './parseAirport.js';
 import AIRPORTS from './url.js';
 
-const cnKeyWords = ['hk', '香港', '新加坡', '台湾', '澳门'];
+const cnKeyWords = ['hk', '香港', '新加坡', '台湾', '澳门', 'jp', 'sg'];
 function hasCnKeyword(label) {
     return cnKeyWords.some((keyword) => {
         return label.indexOf(keyword) > -1;

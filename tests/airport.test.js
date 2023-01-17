@@ -5,4 +5,4 @@ import {
 } from '../modules/airport/index.js';
 // console.log(toGliderForward(await randomANode()));
 const list = await getAllNode();
-console.log(list);
+console.log(await randomANode());
