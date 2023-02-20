@@ -4,21 +4,30 @@
 import axios from 'axios';
 
 async function parseAirport(subUrl) {
-    const res = await axios({
-        method: 'get',
-        url: subUrl,
-        responseType: 'text',
-    });
-    const data = decodeBase64(res.data);
-    const proxyArr = data.split(`\n`);
-    // console.log(proxyArr);
-    // console.log(parserNode(proxyArr[10]));
-    const nodeList = [];
-    proxyArr.forEach((item) => {
-        const nodeInfo = parserNode(item);
-        nodeInfo && nodeList.push(nodeInfo);
-    });
-    return nodeList;
+    try {
+        const res = await axios({
+            timeout: 10000,
+            method: 'get',
+            url: subUrl,
+            responseType: 'text',
+        });
+        if(!data){
+            return [];
+        }
+        const data = decodeBase64(res.data);
+        const proxyArr = data.split(`\n`);
+        // console.log(proxyArr);
+        // console.log(parserNode(proxyArr[10]));
+        const nodeList = [];
+        proxyArr.forEach((item) => {
+            const nodeInfo = parserNode(item);
+            nodeInfo && nodeList.push(nodeInfo);
+        });
+        return nodeList;
+    } catch (error) {
+        return [];
+    }
+    
 }
 
 function parserNode(str) {
