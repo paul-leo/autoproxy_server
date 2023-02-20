@@ -11,12 +11,12 @@ async function parseAirport(subUrl) {
             url: subUrl,
             responseType: 'text',
         });
-        if(!data){
+        //
+        if (!res || !res.data) {
             return [];
         }
         const data = decodeBase64(res.data);
         const proxyArr = data.split(`\n`);
-        // console.log(proxyArr);
         // console.log(parserNode(proxyArr[10]));
         const nodeList = [];
         proxyArr.forEach((item) => {
@@ -25,6 +25,7 @@ async function parseAirport(subUrl) {
         });
         return nodeList;
     } catch (error) {
+        // console.log("error", error);
         return [];
     }
     
