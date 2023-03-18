@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "export NODE_ENV=development && rollup -c rollup.config.js -w && node dist/main.js",
+        "dev": "export NODE_ENV=development && rollup -c rollup.config.js && node dist/main.js",
         "start": "export NODE_ENV=production && rollup -c rollup.config.js && node dist/main.js"
     },
     "repository": {
@@ -23,13 +23,16 @@
         "@babel/preset-env": "^7.20.2",
         "@rollup/plugin-babel": "^6.0.3",
         "@rollup/plugin-commonjs": "^24.0.1",
+        "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-typescript": "^11.0.0",
+        "core-js": "^3.29.1",
         "express": "^4.17.1",
         "fs-extra": "^10.0.0",
         "lowdb": "^2.1.0",
         "rollup": "^3.19.1",
         "socket.io-client": "^4.5.4",
+        "tslib": "^2.5.0",
         "typescript": "^5.0.2"
     },
     "type": "module",

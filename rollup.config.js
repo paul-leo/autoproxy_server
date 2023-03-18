@@ -2,23 +2,21 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import babelEnv from '@babel/preset-env';
-console.log(babel, commonjs, nodeResolve, babelEnv);
+import typescript from '@rollup/plugin-typescript';
 const isDev = process.env.NODE_ENV === 'development';
 const defaultConfig = {
     input: {
         main: 'src/main.ts',
     },
     external: (id) => {
-        const external = [];
-        const isCoreJs = id.indexOf('core-js') === 0;
-        return external.includes(id) || isCoreJs;
+        return id.indexOf('tslib') === -1 && id.indexOf('node_modules') > -1;
     },
     plugins: [
         nodeResolve(),
         commonjs(),
         babel({
             babelHelpers: 'bundled',
-            exclude: ['node_modules/**', '../../node_modules/core-js/**'],
+            include: ['src/**'],
             presets: [
                 [
                     babelEnv,
@@ -30,10 +28,20 @@ const defaultConfig = {
                 ],
             ],
         }),
+        typescript({
+            compilerOptions: {
+                allowJs: true,
+                checkJs: false,
+                lib: ['es5', 'es6', 'dom', 'esnext'],
+                target: 'es5',
+                allowSyntheticDefaultImports: true,
+                jsx: 'react',
+            },
+        }),
     ],
     output: {
         dir: 'dist',
-        format: 'iife',
+        format: 'es',
         entryFileNames: 'main.js',
         sourcemap: isDev,
         exports: 'auto',

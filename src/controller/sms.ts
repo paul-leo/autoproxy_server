@@ -1,8 +1,19 @@
-function Post(...args){
-    console.log(args);
-    return ()=>{}
+function f() {
+    console.log('f(): evaluated');
+    return function (
+        target,
+        propertyKey: string,
+        descriptor: PropertyDescriptor
+    ) {
+        console.log('f(): called');
+    };
 }
+
+
 export default class SMSController {
+    private app;
+    private baseUrl;
+    private controllers;
     constructor(app, baseUrl) {
         if (!baseUrl) {
             return;
@@ -19,6 +30,6 @@ export default class SMSController {
             return res.send('2');
         });
     }
-    @Post('/send')
+    @f()
     sendSms() {}
 }
