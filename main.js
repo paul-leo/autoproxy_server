@@ -2,6 +2,7 @@ import express from 'express';
 import DB from './helpers/db/db.js';
 import Logs from './helpers/db/logs.js';
 import fs from 'fs-extra';
+import session from 'express-session';
 import bodyParser from 'body-parser';
 import {
     getAllNode,
@@ -112,8 +113,6 @@ app.get('/log', async (req, res) => {
     }
 });
 
-app.use('/', express.static('static'));
-
 app.get('/addBlackDomain', async (req, res) => {
     const { domain = '', tag = 'domains' } = req.query;
     const result = { code: 0, msg: '保存成功' };
@@ -174,6 +173,17 @@ app.use('/auto-update', express.static('auto-update'));
 
 app.use('/front', express.static('front'));
 
+app.use('/', express.static('static'));
+
+app.set('trust proxy', 1); // trust first proxy
+app.use(
+    session({
+        secret: 'XFKSDFKKSLFJKKLLSDFUPWQURQNNNZ',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true },
+    })
+);
 server.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
     httpProxy
