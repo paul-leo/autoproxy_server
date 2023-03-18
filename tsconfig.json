@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["es5", "es6", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "declaration": true,
+        "declarationDir": "dist"
+    },
+    "include": ["src", "dist"]
+}

@@ -18,6 +18,8 @@ import Intranet from './modules/Intranet/index.js';
 import { Server } from 'socket.io';
 import http from 'http';
 import httpProxy from 'http-proxy';
+import SMS from './controller/sms.js';
+
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 
@@ -166,7 +168,7 @@ app.post('applyIntranePort', async (req, res) => {
     const result = await DB.saveIntranetPort(deviceId, clientPort);
     await res.send(JSON.stringify({ result }));
 });
-
+new SMS(app, 'sms');
 app.get('login', async () => {});
 
 app.use('/auto-update', express.static('auto-update'));
