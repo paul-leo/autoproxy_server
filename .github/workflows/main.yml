@@ -27,7 +27,10 @@ jobs:
 
             - name: Setup Node.js environment
               uses: actions/setup-node@v2.1.2
-
+            - name: Install npm dependencies
+              run: npm install
+            - name: Run build task
+              run: npm run build
             - name: Deploy to Server
               uses: focusbe/deploy-action@v2.5.3
               with:
@@ -40,7 +43,7 @@ jobs:
                   project-name: 'autoproxy_server'
                   args: '-av'
                   source-path: './'
-                  exclude: ''
+                  exclude: 'node_modules'
             - name: Restart server
               uses: appleboy/ssh-action@master
               with:
@@ -49,6 +52,6 @@ jobs:
                   password: 'zuofei@1992'
                   script: |
                       cd /var/www/github/autoproxy_server
-                      npm install
+                      npm install --production
                       docker-compose down
                       docker-compose up -d
