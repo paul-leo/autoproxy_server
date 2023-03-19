@@ -43,7 +43,7 @@ jobs:
                   project-name: 'autoproxy_server'
                   args: '-av --include="dist" --include="package.json" --include="docker-compose.yml" --include="pm2.json --include="package-lock.json" --include="Dockerfile"'
                   source-path: './'
-                  exclude: '--exclude node_modules --exclude .git --exclude src'
+                  exclude: '--exclude node_modules --exclude src'
             - name: Restart server
               uses: appleboy/ssh-action@master
               with:
