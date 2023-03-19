@@ -43,7 +43,7 @@ jobs:
                   project-name: 'autoproxy_server'
                   args: '-av'
                   source-path: './'
-                  exclude: 'node_modules'
+                  exclude: '--exclude node_modules'
             - name: Restart server
               uses: appleboy/ssh-action@master
               with:
