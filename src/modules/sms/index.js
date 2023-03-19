@@ -6,8 +6,9 @@ import {
     smsTemplateId,
     TENCENT_SMS_APP_ID,
 } from './contant.js';
-const SmsClient = tencentcloud.sms.v20210111.Client
+const SmsClient = tencentcloud.sms.v20210111.Client;
 
+const codePool = {};
 
 const client = new SmsClient({
     credential: {
@@ -36,16 +37,47 @@ function getTemplateId(phone, name) {
     }
 }
 
+export async function verifyCode(phone, code) {
+    if (!phone) {
+        return new Error('参数不合法');
+    }
+    const cache = codePool[phone];
+    if (!cache) {
+        return new Error('未发送短信');
+    }
+    if (new Date().getTime() - cache.time > 5 * 60 * 1000) {
+        delete codePool[phone];
+        return new Error('短信验证码已过期');
+    }
+    const result = cache.code === code;
+    if (result) {
+        delete codePool[phone];
+    }
+    return result;
+}
+
 /** 发送短信 */
 export async function sendCode(phone, req = null) {
     if (!phone) {
         return new Error('参数不合法');
     }
+    const cache = codePool[phone];
+    if (cache) {
+        if (new Date().getTime() - cache.time < 60 * 1000) {
+            return new Error('60S只能发送一次');
+        } else {
+            try {
+                delete codePool[phone];
+            } catch (error) {}
+        }
+    }
     // 随机一个code
     const smscode = ('000000' + Math.floor(Math.random() * 999999)).slice(-6);
     const templateID = getTemplateId(phone, SMS_TEMPLATE_NAME.CODE);
     try {
-        return await sendSms(phone, templateID, [smscode]);
+        const res = await sendSms(phone, templateID, [smscode]);
+        codePool[phone] = { time: new Date().getTime(), code: smscode };
+        return true;
         // 有请求的话
     } catch (error) {
         return error;
@@ -81,14 +113,14 @@ export function sendSms(phone, template, sendParams) {
         /* 国际/港澳台短信 senderid（无需要可忽略）: 国内短信填空，默认未开通，如需开通请联系 [腾讯云短信小助手] */
         SenderId: '',
     };
-    console.log(phone, Sign, template, sendParams,params);
-    return new Promise((resolve,reject)=>{
+    console.log(phone, Sign, template, sendParams, params);
+    return new Promise((resolve, reject) => {
         client.SendSms(params, function (errMsg, response) {
             if (errMsg) {
-                reject(errMsg );
+                reject(errMsg);
                 return;
             }
             resolve(response);
         });
-    })
+    });
 }

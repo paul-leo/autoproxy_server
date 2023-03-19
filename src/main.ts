@@ -18,7 +18,7 @@ import Intranet from './modules/Intranet/index.js';
 import { Server } from 'socket.io';
 import httpProxy from 'http-proxy';
 import SMS from './controller/sms';
-import { default as http } from 'http';
+import http from 'http';
 
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
@@ -48,13 +48,13 @@ app.get('/saveip', async (req, res) => {
 
 app.get('/getip', async (req, res) => {
     const { key } = req.query;
-    const result = { code: 0, msg: '' };
+    const result = { code: 0, msg: '', data: null };
     const ip = await DB.getIP(key);
     if (!ip) {
         result.code = -1;
         result.msg = '获取失败';
     } else {
-        // result.data = { ip };
+        result.data = { ip };
     }
     await res.send(JSON.stringify(result));
 });
@@ -148,10 +148,10 @@ app.get('/removeBlackDomain', async (req, res) => {
 });
 
 app.get('/getBlackDomains', async (req, res) => {
-    const result = { code: 0 };
+    const result = { code: 0, list: [] };
     const { tag = 'domains' } = req.query;
     const allDomains = await getBlackList(tag);
-    // result.list = allDomains;
+    result.list = allDomains;
     await res.send(JSON.stringify(result));
 });
 
