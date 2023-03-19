@@ -1,4 +1,4 @@
-import { sendCode, verifyCode } from '../modules/sms';
+import { sendCode, verifyCode, sendSms } from '../modules/sms';
 
 const controller = {};
 function Request(rout) {
@@ -46,6 +46,20 @@ export default class SMSController {
     async verifyCode(req, res) {
         const { phone, code } = req.body || {};
         const result = await verifyCode(phone, code);
+        if (result instanceof Error) {
+            return { code: -1, msg: result.message };
+        }
+        return { code: result ? 0 : -2, data: result };
+    }
+    @Request('sendsms')
+    async sendSms(req, res) {
+        let { phone, type, params = [] } = req.body || {};
+
+        try {
+            params = JSON.parse(params);
+        } catch (error) {}
+        console.log(phone, type, params);
+        const result = await sendSms(phone, type, params);
         if (result instanceof Error) {
             return { code: -1, msg: result.message };
         }
