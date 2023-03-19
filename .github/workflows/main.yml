@@ -41,7 +41,7 @@ jobs:
                   ip: '47.94.88.179'
                   remote-path: 'www'
                   project-name: 'autoproxy_server'
-                  args: '-av'
+                  args: '-av --include="dist" --include="package.json"'
                   source-path: './'
                   exclude: '--exclude node_modules'
             - name: Restart server
