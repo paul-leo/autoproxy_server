@@ -1,7 +1,19 @@
 import getAllNode from './getAllNode.js';
 import { tcpPingPort } from 'tcp-ping-port';
 let avaliUrl = [];
-const cnKeyWords = ['hk', '香港', '新加坡', '台湾', '澳门', 'jp', 'sg', 'tw'];
+const cnKeyWords = [
+    'hk',
+    '香港',
+    '新加坡',
+    '台湾',
+    '澳门',
+    'jp',
+    'sg',
+    'tw',
+    '日本',
+    'kr',
+    '韩国',
+];
 function hasCnKeyword(label) {
     return cnKeyWords.some((keyword) => {
         return label.indexOf(keyword) > -1;
