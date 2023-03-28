@@ -41,7 +41,7 @@ async function randomANode() {
         return label && hasCnKeyword(label);
     });
     const res = raceANode(nodeList);
-    avaliUrl.push(res);
+    // avaliUrl.push(res);
     return res;
 }
 
