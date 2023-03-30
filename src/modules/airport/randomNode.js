@@ -15,9 +15,10 @@ const cnKeyWords = [
     '韩国',
 ];
 function hasCnKeyword(label) {
-    return cnKeyWords.some((keyword) => {
-        return label.indexOf(keyword) > -1;
-    });
+    // return cnKeyWords.some((keyword) => {
+    //     return label.indexOf(keyword) > -1;
+    // });
+    return true;
 }
 
 async function testNode(node) {
