@@ -19,6 +19,8 @@ import { Server } from 'socket.io';
 import httpProxy from 'http-proxy';
 import SMS from './controller/sms';
 import http from 'http';
+import cors from 'cors';
+import Paper from './helpers/db/paper.js';
 
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
@@ -28,6 +30,12 @@ const io = new Server(server);
 
 const port = 8801;
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+    cors({
+        origin: '*',
+        credentials: true,
+    })
+);
 new Intranet(io);
 
 app.get('/saveip', async (req, res) => {
@@ -101,6 +109,19 @@ app.post('/log', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
+    }
+});
+
+app.post('/saveOrUpdatePaperDetail', async (req, res) => {
+    const { data } = req.body;
+    const result = JSON.parse(data);
+
+    const exmDetail = JSON.parse(result?.data);
+    try {
+        await Paper.saveExam(exmDetail);
+        res.send({ code: 0, msg: '保存成功' });
+    } catch (error) {
+        res.send({ code: -1, msg: '保存失败' });
     }
 });
 
