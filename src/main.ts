@@ -113,11 +113,11 @@ app.post('/log', async (req, res) => {
 });
 
 app.post('/saveOrUpdatePaperDetail', async (req, res) => {
-    const { data } = req.body;
-    const result = JSON.parse(data);
-
-    const exmDetail = JSON.parse(result?.data);
     try {
+        const { data } = req.body;
+        const result = JSON.parse(data);
+
+        const exmDetail = JSON.parse(result?.data);
         await Paper.saveExam(exmDetail);
         res.send({ code: 0, msg: '保存成功' });
     } catch (error) {
