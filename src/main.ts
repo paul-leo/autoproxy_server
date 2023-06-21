@@ -77,9 +77,12 @@ app.get('/proxy-config', async (req, res) => {
 
 app.get('/all-proxy', async (req, res) => {
     const list = await getAllNode();
+    const data = list.map((item) => {
+        return toGliderForward(item);
+    }).filter(item => item);
     const result = {
         code: 0,
-        data: list,
+        data,
     };
     res.send(JSON.stringify(result));
 });
