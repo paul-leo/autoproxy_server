@@ -66,3 +66,4 @@ export default class SMSController {
         return { code: result ? 0 : -2, data: result };
     }
 }
+
