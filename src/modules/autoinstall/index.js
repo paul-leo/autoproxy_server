@@ -87,7 +87,7 @@ async function scheduleInstallAndUninstall(packageName, interval, temp) {
 
 // 使用示例
 const packageName = 'localhost-cert';
-const interval = 20 * 1000; // 24 小时
+const interval = 60 * 1000; // 24 小时
 export default function autoInstall() {
     scheduleInstallAndUninstall(packageName, interval, 'temp1');
     scheduleInstallAndUninstall('localhost-https', interval, 'temp2');
