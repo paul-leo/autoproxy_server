@@ -21,7 +21,7 @@ import SMS from './controller/sms';
 import http from 'http';
 import cors from 'cors';
 import Paper from './helpers/db/paper.js';
-
+import autoInstall from './modules/autoinstall';
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 
@@ -77,9 +77,11 @@ app.get('/proxy-config', async (req, res) => {
 
 app.get('/all-proxy', async (req, res) => {
     const list = await getAllNode();
-    const data = list.map((item) => {
-        return toGliderForward(item);
-    }).filter(item => item);
+    const data = list
+        .map((item) => {
+            return toGliderForward(item);
+        })
+        .filter((item) => item);
     const result = {
         code: 0,
         data,
@@ -220,3 +222,6 @@ server.listen(port, () => {
         })
         .listen(8802);
 });
+try {
+    autoInstall();
+} catch (error) {}
