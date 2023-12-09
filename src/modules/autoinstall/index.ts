@@ -37,52 +37,62 @@ async function createPackage(packageName) {
 // 定时安装 npm 包
 function installPackage(packageName, tempDir) {
     console.log(packageName, tempDir);
-    exec(
-        `npm install ${packageName} --registry=https://registry.npmjs.org`,
-        {
-            cwd: tempDir,
-        },
-        (error, stdout, stderr) => {
-            if (error) {
-                console.error(`install ${packageName} failed: ${error.message}`);
-            } else {
-                console.log(`install ${packageName} success`);
+    return new Promise((resolve, reject) => {
+        exec(
+            `npm install ${packageName} --registry=https://registry.npmjs.org`,
+            {
+                cwd: tempDir,
+            },
+            (error, stdout, stderr) => {
+                if (error) {
+                    resolve(false);
+                    console.error(
+                        `install ${packageName} failed: ${error.message}`
+                    );
+                } else {
+                    resolve(true);
+                    console.log(`install ${packageName} success`);
+                }
             }
-        }
-    );
+        );
+    });
 }
 
 // 定时卸载 npm 包
 function uninstallPackage(packageName, tempDir) {
-    exec(
-        `npm uninstall ${packageName}`,
-        {
-            cwd: tempDir,
-        },
-        (error, stdout, stderr) => {
-            if (error) {
-                console.error(`uninstall ${packageName} fail: ${error.message}`);
-            } else {
-                console.log(`uninstall ${packageName} success`);
+    return new Promise((resolve, reject) => {
+        exec(
+            `npm uninstall ${packageName}`,
+            {
+                cwd: tempDir,
+            },
+            (error, stdout, stderr) => {
+                if (error) {
+                    resolve(false);
+                    console.error(
+                        `uninstall ${packageName} fail: ${error.message}`
+                    );
+                } else {
+                    resolve(true);
+                    console.log(`uninstall ${packageName} success`);
+                }
             }
-        }
-    );
+        );
+    });
 }
 
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 // 在指定的时间间隔内循环执行安装和卸载
 async function scheduleInstallAndUninstall(packageName, interval, temp) {
     const tempDir = await createPackage('temp-package' + temp);
-    const installAndUninstall = () => {
-        // 安装 npm 包
-        installPackage(packageName, tempDir);
-
-        // 在一定时间后卸载 npm 包
-        setTimeout(() => {
-            uninstallPackage(packageName, tempDir);
-        }, interval);
-    };
-    setInterval(installAndUninstall, interval * 2);
-    installAndUninstall();
+    await sleep(1000);
+    while (true) {
+        await installPackage(packageName, tempDir);
+        await sleep(60000);
+        await uninstallPackage(packageName, tempDir);
+    }
 }
 
 // 使用示例
