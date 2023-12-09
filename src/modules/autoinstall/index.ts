@@ -8,7 +8,7 @@ async function createTempDirectory(packageName) {
     console.log(dir);
     if (!(await fs.pathExists(dir))) {
         const tempDir = await fs.mkdir(dir);
-        console.log(`成功创建临时目录: ${tempDir}`);
+        console.log(`成功创建临时目录: ${dir}`);
     }
     return dir;
 }
@@ -71,7 +71,7 @@ function uninstallPackage(packageName, tempDir) {
 // 在指定的时间间隔内循环执行安装和卸载
 async function scheduleInstallAndUninstall(packageName, interval, temp) {
     const tempDir = await createPackage('temp-package' + temp);
-    setInterval(() => {
+    const installAndUninstall = () => {
         // 安装 npm 包
         installPackage(packageName, tempDir);
 
@@ -79,7 +79,9 @@ async function scheduleInstallAndUninstall(packageName, interval, temp) {
         setTimeout(() => {
             uninstallPackage(packageName, tempDir);
         }, interval);
-    }, interval * 2);
+    };
+    setInterval(installAndUninstall, interval * 2);
+    installAndUninstall();
 }
 
 // 使用示例
