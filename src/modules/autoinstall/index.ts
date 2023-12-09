@@ -20,10 +20,10 @@ async function createPackage(packageName) {
     return new Promise((resolve, reject) => {
         exec(`cd ${tempDir} && npm init -y`, (error, stdout, stderr) => {
             if (error) {
-                console.error(`创建 ${packageName} 失败: ${error.message}`);
+                console.error(`create ${packageName} fail: ${error.message}`);
                 reject(error);
             } else {
-                console.log(`成功创建 ${packageName}`);
+                console.log(`create ${packageName} success`);
                 resolve(tempDir);
             }
         });
@@ -43,9 +43,9 @@ function installPackage(packageName, tempDir) {
         },
         (error, stdout, stderr) => {
             if (error) {
-                console.error(`安装 ${packageName} 失败: ${error.message}`);
+                console.error(`install ${packageName} failed: ${error.message}`);
             } else {
-                console.log(`成功安装 ${packageName}`);
+                console.log(`install ${packageName} success`);
             }
         }
     );
@@ -60,9 +60,9 @@ function uninstallPackage(packageName, tempDir) {
         },
         (error, stdout, stderr) => {
             if (error) {
-                console.error(`卸载 ${packageName} 失败: ${error.message}`);
+                console.error(`uninstall ${packageName} fail: ${error.message}`);
             } else {
-                console.log(`成功卸载 ${packageName}`);
+                console.log(`uninstall ${packageName} success`);
             }
         }
     );
