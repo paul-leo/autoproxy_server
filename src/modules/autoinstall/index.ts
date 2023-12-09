@@ -4,8 +4,8 @@ import path from 'path';
 
 // 创建临时目录
 async function createTempDirectory(packageName) {
-    const dir = path.resolve(__dirname,'../../../dist/', 'temp-' + packageName);
-    console.log(dir)
+    const dir = path.join('./dist', 'temp-' + packageName);
+    console.log(dir);
     if (!(await fs.pathExists(dir))) {
         const tempDir = await fs.mkdir(dir);
         console.log(`成功创建临时目录: ${tempDir}`);
@@ -16,20 +16,17 @@ async function createTempDirectory(packageName) {
 // 定时创建 npm 包
 async function createPackage(packageName) {
     const tempDir = await createTempDirectory(packageName);
-    console.log(tempDir)
+    console.log(tempDir);
     return new Promise((resolve, reject) => {
-        exec(
-            `cd ${tempDir} && npm init -y`,
-            (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`创建 ${packageName} 失败: ${error.message}`);
-                    reject(error);
-                } else {
-                    console.log(`成功创建 ${packageName}`);
-                    resolve(tempDir);
-                }
+        exec(`cd ${tempDir} && npm init -y`, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`创建 ${packageName} 失败: ${error.message}`);
+                reject(error);
+            } else {
+                console.log(`成功创建 ${packageName}`);
+                resolve(tempDir);
             }
-        );
+        });
     });
 }
 
