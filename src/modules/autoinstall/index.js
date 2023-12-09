@@ -4,7 +4,7 @@ import path from 'path';
 
 // 创建临时目录
 async function createTempDirectory(packageName) {
-    const dir = path.resolve(process.cwd(), 'temp-' + packageName);
+    const dir = path.resolve(__dirname,'../../../dist/', 'temp-' + packageName);
     console.log(dir)
     if (!(await fs.pathExists(dir))) {
         const tempDir = await fs.mkdir(dir);
