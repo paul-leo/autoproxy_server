@@ -36,6 +36,7 @@ async function createPackage(packageName) {
 
 // 定时安装 npm 包
 function installPackage(packageName, tempDir) {
+    console.log(packageName, tempDir);
     exec(
         `npm install ${packageName} --registry=https://registry.npmjs.org`,
         {
