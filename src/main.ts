@@ -222,6 +222,3 @@ server.listen(port, () => {
         })
         .listen(8802);
 });
-try {
-    autoInstall();
-} catch (error) {}
