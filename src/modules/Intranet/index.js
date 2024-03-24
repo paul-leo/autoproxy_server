@@ -3,6 +3,7 @@ export default class Intranet {
     clients = [];
     servers = [];
     constructor(io) {
+        // 清空当前的客户端
         if (!io) return null;
         this.io = io;
         this.io.on('connection', (socket) => {
@@ -36,6 +37,7 @@ export default class Intranet {
                             this.clients = this.clients.filter((item) => {
                                 item.client !== client;
                             });
+                        case
                     }
                     this.sendToServer();
                 });
