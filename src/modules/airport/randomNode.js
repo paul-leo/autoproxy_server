@@ -27,13 +27,15 @@ async function testNode(node) {
         socketTimeout: 3000,
         dnsTimeout: 3000,
     };
-
+    const startTime = Date.now();
     const res = await tcpPingPort(host, Number(port), options);
-    if (res.online) {
-        return node;
-    } else {
-        throw new Error('timeout');
-    }
+    const endTime = Date.now();
+    const spendTime = endTime - startTime;
+    return {
+        node,
+        spendTime,
+        online: res.online,
+    };
 }
 
 async function randomANode() {
@@ -61,9 +63,20 @@ async function randomANode() {
 async function raceANode(nodeList) {
     const promisePool = [];
     for (var i in nodeList) {
+        let node = nodeList[i];
+        if (
+            node.label.indexOf('最新网站') > -1 ||
+            node.label.indexOf('防失联') > -1 ||
+            node.host === '127.0.0.1'
+        ) {
+            continue;
+        }
         promisePool.push(testNode(nodeList[i]));
     }
-    const res = await Promise.race(promisePool);
-    return res;
+    let res = await Promise.all(promisePool);
+    res = res.sort((a, b) => {
+        return a.spendTime - b.spendTime;
+    });
+    return res[0].node;
 }
 export default randomANode;

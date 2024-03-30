@@ -37,7 +37,6 @@ export default class Intranet {
                             this.clients = this.clients.filter((item) => {
                                 item.client !== client;
                             });
-                        case
                     }
                     this.sendToServer();
                 });
