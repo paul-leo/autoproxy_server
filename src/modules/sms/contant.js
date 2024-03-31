@@ -22,6 +22,6 @@ export const smsTemplateId = {
     },
 };
 
-export const TENCENT_SMS_APP_ID = "1400294742";
-export const TENCENT_SMS_SECRET_ID = 'AKIDFJ7h2BWr7BzYsxIR1QcZGj13qX2Iw4bu';
-export const TENCENT_SMS_SECRET_KEY = 'FKH1Wlmb9XgkdGdleIm3FF0VlnaJqLdg';
+export const TENCENT_SMS_APP_ID = process.env.TENCENT_SMS_APP_ID;
+export const TENCENT_SMS_SECRET_ID = process.env.TENCENT_SMS_SECRET_ID;
+export const TENCENT_SMS_SECRET_KEY = process.env.TENCENT_SMS_SECRET_KEY;
