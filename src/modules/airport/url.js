@@ -1,8 +1,15 @@
-let AIRPORTURLS = process.env.AIRPORTURLS;
-try {
-  AIRPORTURLS = JSON.parse(AIRPORTURLS);
-} catch (error) {
-  AIRPORTURLS = []
+export default function getUrls() {
+    let AIRPORTURLS = process.env.AIRPORTURLS;
+    console.log('AIRPORTURLS', AIRPORTURLS);
+    try {
+        AIRPORTURLS =
+        AIRPORTURLS.split('|').map((item) => {
+            return item.trim();
+        });
+    } catch (error) {
+        console.log(error);
+        AIRPORTURLS = [];
+    }
+    console.log('AIRPORTURLS', AIRPORTURLS);
+    return AIRPORTURLS;
 }
-export default AIRPORTURLS;
-

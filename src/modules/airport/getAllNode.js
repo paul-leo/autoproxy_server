@@ -1,8 +1,9 @@
-import AIRPORTS from './url.js';
+import getAIRPORTS from './url.js';
 import { parseAirport } from './index.js';
 
 export default async function getAllNode() {
     try {
+        const AIRPORTS = getAIRPORTS();
         let res = [];
         await Promise.all(
             AIRPORTS.map(async (item) => {

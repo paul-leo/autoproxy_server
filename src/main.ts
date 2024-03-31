@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import DB from './helpers/db/db.js';
 import Logs from './helpers/db/logs.js';
@@ -21,6 +22,11 @@ import SMS from './controller/sms';
 import http from 'http';
 import cors from 'cors';
 import Paper from './helpers/db/paper.js';
+const isEnv = process.env.NODE_ENV === 'development';
+dotenv.config({
+    path: isEnv ? './.env.local' : './.env',
+});
+console.log(isEnv,process.env)
 process.env.TZ = 'Asia/Shanghai';
 const app = express();
 
